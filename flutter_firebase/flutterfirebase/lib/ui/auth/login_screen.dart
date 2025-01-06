@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfirebase/ui/auth/login_with_phonenumber.dart';
 import 'package:flutterfirebase/ui/auth/singup_screen.dart';
 import 'package:flutterfirebase/ui/post/post_screen.dart';
 import 'package:flutterfirebase/widgets/rounded_button.dart';
@@ -34,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       _auth
           .signInWithEmailAndPassword(
-              email: emailController.text.toString(),
-              password: passwordController.text.toString())
+              email: emailController.text.toString().trim(),
+              password: passwordController.text.toString().trim())
           .then((value) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(value.user!.email.toString())));
@@ -132,6 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginWithPhonenumber(),
+                    ));
+              },
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(

@@ -34,7 +34,7 @@ class _SingupScreenState extends State<SingupScreen> {
       });
       _auth
           .createUserWithEmailAndPassword(
-              email: emailController.text.toString(),
+              email: emailController.text.toString().trim(),
               password: passwordController.text.toString())
           .then((value) {
         setState(() {
