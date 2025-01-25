@@ -41,7 +41,7 @@ class ImageWidget extends StatelessWidget {
               // color: Colors.red,
               decoration: BoxDecoration(
                 boxShadow: [
-                  BoxShadow(
+                   BoxShadow(
                       blurRadius: 10, color: Colors.grey, spreadRadius: 5.0)
                 ],
                 borderRadius: BorderRadius.circular(20),

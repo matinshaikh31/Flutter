@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "furniture-renting-91dac",
+          "appId": "1:807829589402:android:1c5e66bc9d556b4649fe23",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "furniture-renting-91dac",
+          "configurations": {
+            "android": "1:807829589402:android:1c5e66bc9d556b4649fe23",
+            "web": "1:807829589402:web:efbf4a868fdbc4c449fe23"
+          }
+        }
+      }
+    }
+  }
+}
