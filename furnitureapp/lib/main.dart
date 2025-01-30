@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:furnitureapp/controllers/auth_cntrl.dart';
 import 'package:furnitureapp/controllers/productCntrl.dart';
+import 'package:furnitureapp/shared/firebase.dart';
 import 'package:furnitureapp/views/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:furnitureapp/views/login_screen.dart';
 import 'package:furnitureapp/views/products_screen.dart';
+import 'package:furnitureapp/views/profile_screen.dart';
 import 'package:furnitureapp/views/registartion_screen.dart';
 import 'package:furnitureapp/views/single_product_screen.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -51,6 +53,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   final GoRouter _router = GoRouter(
+    redirect: (context, state) {
+      print("objectwieofowefjwioef");
+      print(state.uri.path);
+      if (FBAuth.auth.currentUser != null && state.uri.path == "/login") {
+        return "/profile";
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: "/",
@@ -63,6 +73,10 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
         path: "/login",
         builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        path: "/profile",
+        builder: (context, state) => ProfileScreen(),
       ),
       GoRoute(
         path: "/register",

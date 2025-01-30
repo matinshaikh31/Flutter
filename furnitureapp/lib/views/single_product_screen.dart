@@ -35,25 +35,27 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               preferredSize: Size.fromHeight(80),
               child: NavbarSection(),
             ),
-            body: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    SizedBox(width: 10),
-                    SizedBox(
-                        width: 700,
-                        height: 600,
-                        child: Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: SingleProductImages(product: product),
-                        )),
-                    _productDetails(product)
-                  ],
-                )
-              ],
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: 10),
+                      SizedBox(
+                          width: 700,
+                          height: 600,
+                          child: Padding(
+                            padding: const EdgeInsets.all(30),
+                            child: SingleProductImages(product: product),
+                          )),
+                      _productDetails(product, pcntrl)
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           mobileBody: Scaffold(
@@ -65,7 +67,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 children: [
                   SizedBox(width: 10),
                   SingleProductImages(product: product),
-                  _productDetails(product)
+                  _productDetails(product, pcntrl)
                 ],
               ),
             ),
@@ -75,9 +77,9 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     //   child: Text("<MMAMMAM${widget.id}"),
   }
 
-  SizedBox _productDetails(Products? product) {
+  SizedBox _productDetails(Products? product, Productcntrl pcntrl) {
     return SizedBox(
-      width: 750,
+      width: 600,
       height: 600,
       child: Padding(
         padding: const EdgeInsets.all(50),
@@ -138,12 +140,17 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   borderRadius: BorderRadius.circular(5),
                   color: const Color.fromARGB(255, 143, 107, 0)),
               child: Center(
-                child: Text(
-                  "ADD TO CART",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400),
+                child: InkWell(
+                  onTap: () {
+                    pcntrl.addProductToCart(product.id);
+                  },
+                  child: Text(
+                    "ADD TO CART",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
             ),

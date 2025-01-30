@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:furnitureapp/controllers/auth_cntrl.dart';
 import 'package:furnitureapp/models/user_model.dart';
 import 'package:furnitureapp/views/components/navbar_mobile.dart';
 import 'package:furnitureapp/views/components/navbar_section.dart';
 import 'package:furnitureapp/views/home_screen.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:go_router/go_router.dart';
 
 class RegistartionScreen extends StatefulWidget {
   const RegistartionScreen({super.key});
@@ -93,7 +95,9 @@ class _RegistartionScreenState extends State<RegistartionScreen> {
                 width: 200,
                 height: 50,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    authcntrl.singup(context);
+                  },
                   style: ButtonStyle(
                     foregroundColor: WidgetStatePropertyAll(Colors.white),
                     shape: WidgetStatePropertyAll(RoundedRectangleBorder(

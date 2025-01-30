@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:furnitureapp/controllers/auth_cntrl.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
 
 class NavbarSection extends StatelessWidget implements PreferredSizeWidget {
-  const NavbarSection({
+  NavbarSection({
     super.key,
   });
 
+  final authCntrl = Get.find<AuthCntrl>();
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -52,7 +56,9 @@ class NavbarSection extends StatelessWidget implements PreferredSizeWidget {
                       Icon(Icons.search),
                       Icon(Icons.shopping_bag_outlined),
                       InkWell(
-                          onTap: () => GoRouter.of(context).go("/login"),
+                          onTap: () => authCntrl.getCurrentUser() != null
+                              ? GoRouter.of(context).go("/profile")
+                              : GoRouter.of(context).go("/login"),
                           child: Icon(Icons.person_2_outlined)),
                     ],
                   ),

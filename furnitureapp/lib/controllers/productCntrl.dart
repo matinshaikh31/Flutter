@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 class Productcntrl extends GetxController {
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? productsstream;
   List<Products> products = [];
+  List<Products> Cartproducts = [];
+  final currentUserId = FBAuth.auth.currentUser?.uid;
 
   getProducts() {
     productsstream?.cancel();
@@ -20,12 +22,16 @@ class Productcntrl extends GetxController {
     );
   }
 
+  addProductToCart(id) async {
+    await FBFireStore.users.doc(currentUserId).update({
+      "cart": FieldValue.arrayUnion([id])
+    });
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getProducts();
-
   }
 }
