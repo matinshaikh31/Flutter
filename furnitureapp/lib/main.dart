@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furnitureapp/controllers/auth_cntrl.dart';
 import 'package:furnitureapp/controllers/productCntrl.dart';
 import 'package:furnitureapp/shared/firebase.dart';
+import 'package:furnitureapp/views/categiour_screen.dart';
 import 'package:furnitureapp/views/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:furnitureapp/views/login_screen.dart';
@@ -35,8 +36,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.put(Productcntrl());
     Get.put(AuthCntrl());
+    Get.put(Productcntrl());
   }
 
   @override
@@ -87,6 +88,13 @@ class _MyAppState extends State<MyApp> {
         builder: (context, state) {
           final String id = state.pathParameters['id']!;
           return SingleProductScreen(id: id);
+        },
+      ),
+      GoRoute(
+        path: "/categiour/:type",
+        builder: (context, state) {
+          final String type = state.pathParameters['type']!;
+          return CategiourScreen(type: type);
         },
       ),
     ],

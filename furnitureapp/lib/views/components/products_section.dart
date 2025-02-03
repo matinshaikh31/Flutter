@@ -20,7 +20,7 @@ class _ProductsSectionState extends State<ProductsSection> {
       builder: (pCtrl) {
         print(pCtrl.products.length);
         final allproductsList = pCtrl.products;
-        print("object======");
+        // print("object======");
         return Padding(
           padding: EdgeInsets.only(left: sizeWidth < 600 ? 10 : 50),
           child: Container(

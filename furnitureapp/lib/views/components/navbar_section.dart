@@ -9,7 +9,7 @@ class NavbarSection extends StatelessWidget implements PreferredSizeWidget {
     super.key,
   });
 
-  final authCntrl = Get.find<AuthCntrl>();
+  // final authCntrl = Get.find<AuthCntrl>();
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -50,18 +50,25 @@ class NavbarSection extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 Wrap(children: [
-                  Row(
-                    spacing: 20,
-                    children: [
-                      Icon(Icons.search),
-                      Icon(Icons.shopping_bag_outlined),
-                      InkWell(
-                          onTap: () => authCntrl.getCurrentUser() != null
-                              ? GoRouter.of(context).go("/profile")
-                              : GoRouter.of(context).go("/login"),
-                          child: Icon(Icons.person_2_outlined)),
-                    ],
-                  ),
+                  GetBuilder<AuthCntrl>(builder: (authcntrl) {
+                    return Row(
+                      spacing: 20,
+                      children: [
+                        Icon(Icons.search),
+                        Badge(
+                          label: Text(
+                              authcntrl.userdetails?.cart.length.toString() ??
+                                  ""),
+                          child: Icon(Icons.shopping_bag_outlined),
+                        ),
+                        InkWell(
+                            onTap: () => authcntrl.userdetails != null
+                                ? GoRouter.of(context).go("/profile")
+                                : GoRouter.of(context).go("/login"),
+                            child: Icon(Icons.person_2_outlined)),
+                      ],
+                    );
+                  }),
                 ])
               ],
             ),

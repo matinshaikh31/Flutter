@@ -78,6 +78,8 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
   }
 
   SizedBox _productDetails(Products? product, Productcntrl pcntrl) {
+    Map<String, String> cart = {"id": "", "count": ""};
+    var count = 0;
     return SizedBox(
       width: 600,
       height: 600,
@@ -142,6 +144,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               child: Center(
                 child: InkWell(
                   onTap: () {
+                    print("MATIN SHAIKH");
                     pcntrl.addProductToCart(product.id);
                   },
                   child: Text(

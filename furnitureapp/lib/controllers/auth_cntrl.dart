@@ -1,16 +1,54 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:furnitureapp/models/user_model.dart';
 import 'package:furnitureapp/shared/firebase.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthCntrl extends GetxController {
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? userDetailsStream;
+  StreamSubscription<User?>? authStream;
+  UserModel? userdetails;
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
-  singup(BuildContext context) async {
+
+  authStateListner() async {
+    // print("NNANANANA");
     try {
-      await FBAuth.auth
+      authStream?.cancel();
+      authStream = FBAuth.auth.authStateChanges().listen((event) {
+        // print("###########${event?.uid}");
+        currentUserListner(event?.uid);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  currentUserListner(String? userId) {
+    try {
+      userDetailsStream?.cancel();
+      userDetailsStream =
+          FBFireStore.users.doc(userId).snapshots().listen((event) {
+        // print('-------- ${event.data()}');
+        userdetails = UserModel.fromSnap(event);
+        // print("matin${userdetails}");
+        update();
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  singup(BuildContext context) {
+    try {
+      FBAuth.auth
           .createUserWithEmailAndPassword(
               email: emailController.text.trim(),
               password: passwordController.text.toString().trim())
@@ -43,9 +81,9 @@ class AuthCntrl extends GetxController {
     }
   }
 
-  singin(BuildContext context) async {
+  singin(BuildContext context) {
     try {
-      await FBAuth.auth
+      FBAuth.auth
           .signInWithEmailAndPassword(
               email: emailController.text.trim(),
               password: passwordController.text.trim())
@@ -74,8 +112,8 @@ class AuthCntrl extends GetxController {
     }
   }
 
-  logout() async {
-    await FBAuth.auth.signOut().then((value) {
+  logout(BuildContext context) {
+    FBAuth.auth.signOut().then((value) {
       Fluttertoast.showToast(
           msg: "Logout",
           gravity: ToastGravity.CENTER,
@@ -83,6 +121,7 @@ class AuthCntrl extends GetxController {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+      context.go("/");
     }).onError((err, StackTrace) {
       Fluttertoast.showToast(
           msg: err.toString(),
@@ -94,15 +133,10 @@ class AuthCntrl extends GetxController {
     });
   }
 
-  getCurrentUser()  {
-    return FBAuth.auth.currentUser;
-    print("ammmmmmmmmmmmmmmmmmmmmmm${FBAuth.auth.currentUser}");
-  }
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getCurrentUser();
+    authStateListner();
   }
 }
