@@ -4,7 +4,7 @@ class UserModel {
   final String uid;
   final String name;
   final String email;
-  final List<Map<String, dynamic>> cart; // FIXED TYPE
+  final Map<String, int> cart;
 
   UserModel({
     required this.uid,
@@ -20,9 +20,17 @@ class UserModel {
       uid: snapshot.id,
       name: data['name'] ?? '',
       email: data['email'] ?? '',
-      cart: (data['cart'] as List<dynamic>? ?? [])
-          .map((item) => Map<String, dynamic>.from(item)) // FIXED
-          .toList(),
+      cart: (data['cart'] as Map<String, dynamic>?)
+              ?.map(((key, value) => MapEntry(key, value as int))) ??
+          {},
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
+      "email": email,
+      "cart": cart,
+    };
   }
 }

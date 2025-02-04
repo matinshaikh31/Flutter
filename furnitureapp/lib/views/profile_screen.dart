@@ -20,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
               preferredSize: Size.fromHeight(80), child: NavbarSection()),
       body: GetBuilder<AuthCntrl>(builder: (authcntrl) {
         final userdetails = authcntrl.userdetails;
+        print("nameofuser${userdetails?.name}");
         return StaggeredGrid.count(
           crossAxisCount: 2,
           mainAxisSpacing: 2,
