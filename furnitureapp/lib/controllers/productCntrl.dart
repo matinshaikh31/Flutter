@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:furnitureapp/controllers/auth_cntrl.dart';
 import 'package:furnitureapp/models/Products.dart';
 import 'package:furnitureapp/shared/firebase.dart';
@@ -33,8 +35,22 @@ class Productcntrl extends GetxController {
           return value + 1;
         },
       );
+      Fluttertoast.showToast(
+          msg: "Product Qty Increased",
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     } else {
       previousCart.addEntries([MapEntry(productId, 1)]);
+      Fluttertoast.showToast(
+          msg: "Product Added",
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
     await FBFireStore.users.doc(currentUserId).update({
       "cart": previousCart,

@@ -58,7 +58,7 @@ class NavbarSection extends StatelessWidget implements PreferredSizeWidget {
                         Badge(
                           label: Text(
                               authcntrl.userdetails?.cart.length.toString() ??
-                                  ""),
+                                  "0"),
                           child: Icon(Icons.shopping_bag_outlined),
                         ),
                         InkWell(
